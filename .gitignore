@@ -1,5 +1,5 @@
-/CSS
-/JS
+*.scss
+/CSS/main.css.map
 /index2.html
 /index3.html
 /script.js

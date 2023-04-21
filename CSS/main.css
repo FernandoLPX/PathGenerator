@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/*
+    Folha de Estido CSS
+*/
+/* Google Fonts */
+/* Variáveis */
+/* CSS Reset */
+* {
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #222;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  /*Tamanho padrão, equivale a 16px e pode ser redimensionada dinamicamente sem distorções ou quebra de layout*/
+  font-size: 1em;
+  background-color: #222;
+}
+
+/* Layout */
+.Container {
+  margin: auto;
+}
+
+.Flex, footer .Container, #saida .Container, #config .Container, header .Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ==================== CABEÇALHO ==================== */
+header .Container {
+  min-height: 5vh;
+}
+
+/* ==================== CONFIGURAÇÃO ==================== */
+#config .Container {
+  min-height: 10vh;
+}
+#config .Container .Selecao {
+  flex-direction: row;
+  padding: 3px;
+}
+#config .Container #generate-btn {
+  background-color: #ff0;
+  color: #222;
+  width: 200px;
+  height: 30px;
+  margin: 10px;
+  align-self: center;
+  border: none;
+  cursor: pointer;
+}
+#config .Container #generate-btn:hover {
+  background-color: #999900;
+  color: #555555;
+}
+
+/* ==================== SAÍDA ==================== */
+#saida h2 {
+  margin: 10px;
+}
+#saida #grid {
+  display: grid;
+  align-self: center;
+  border: 1px solid black;
+  width: 500px;
+  height: 500px;
+  gap: 5px;
+}
+#saida .cell {
+  background-color: white;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+#saida .cell.start {
+  background-color: blue;
+}
+#saida .cell.end {
+  background-color: red;
+}
+#saida .path {
+  background-color: green;
+}
+
+/* ==================== RODAPÉ ==================== */
+footer .Container {
+  min-height: 4vh;
+}/*# sourceMappingURL=main.css.map */
