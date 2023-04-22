@@ -40,6 +40,7 @@ function createGrid() {
 
   // Define o tamanho do grid
   gridContainer.style.gridTemplateColumns = `repeat(${arrSize[1]}, 1fr)`;
+  gridContainer.style.gridTemplateRows = `repeat(${arrSize[0]}, 1fr)`;
 }
 
 function generatePath() {
@@ -65,7 +66,7 @@ function generatePath() {
     console.log(caminho[i]);
     console.log(vizinhos.length);
     // } while (caminho[i] != destino[0] && vizinhos.length > 0)
-  } while (i < 20)
+  } while (i < 2)
   printPath(caminho);
 
 }
@@ -91,6 +92,7 @@ function verificarVizinhosDisponiveis(i, j) {
   for (let i = 0; i < vizinhos.length; i++)
     for (let j = 0; j < caminho.length; j++)
       if (vizinhos[i] === caminho[j]) {
+        console.log('vizinho eliminado: ' + vizinhos[i]);
         vizinhos.splice(i, 1);
         i--;
       }
@@ -122,6 +124,7 @@ function printPath(path) {
   for (let i = 0; i < path.length; i++) {
     caminho2[i] = getCellByID(path[i][0], path[i][1]);
     caminho2[i].classList.add('path');
+    caminho2[i].textContent = i;
   }
 }
 
