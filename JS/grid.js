@@ -63,8 +63,8 @@ function generatePath() {
     vizinhos = verificarVizinhosDisponiveis(caminho[i][0], caminho[i][1]);
     i++;
     caminho[i] = vizinhos[Math.floor(Math.random() * vizinhos.length)];
-    console.log(caminho[i]);
-    console.log(vizinhos.length);
+    console.log('Caminho escolhido: ' + caminho[i]);
+    // console.log(vizinhos.length);
     // } while (caminho[i] != destino[0] && vizinhos.length > 0)
   } while (i < 2)
   printPath(caminho);
@@ -74,21 +74,37 @@ function generatePath() {
 function verificarVizinhosDisponiveis(i, j) {
 
   let vizinhos = [];
-  vizinhos[0] = [i, j + 1];
-  vizinhos[1] = [i, j - 1];
-  vizinhos[2] = [i + 1, j];
-  vizinhos[3] = [i - 1, j];
+  vizinhos[0] = [i - 1, j];//Norte
+  vizinhos[1] = [i + 1, j];//Sul
+  vizinhos[2] = [i, j + 1];//Leste
+  vizinhos[3] = [i, j - 1];//Oeste
+  console.log('vizinho[0]: ' + vizinhos[0] + ' Norte');
+  console.log('vizinho[1]: ' + vizinhos[1] + ' Sul');
+  console.log('vizinho[2]: ' + vizinhos[2] + ' Leste');
+  console.log('vizinho[3]: ' + vizinhos[3] + ' Oeste');
 
   //Elimina vizinhos fora da borda
   for (let i = 0; i < vizinhos.length; i++)
     for (let j = 0; j < vizinhos[i].length; j++)
       if (vizinhos[i][j] < 1 || vizinhos[i][j] > arrSize[1]) {
-        // console.log("fora da borda - " + vizinhos[i][j]);
+        console.log('Fora da borda - vizinho[' + vizinhos[i] + ']');
         vizinhos.splice(i, 1);
-        i--;
+        if (vizinhos.length - 1 < i)
+          i--;
+        console.log('novo vizinhos[' + i + ']: ' + vizinhos[i]);
       }
 
-  //Elimina vizinhos que já estão em um caminho
+  //Só imprimir vizinhos no console para depuração e verificação
+  console.log('Quantidade de vizinhos: ' + vizinhos.length);
+  for (let i = 0; i < vizinhos.length; i++) {
+    console.log('Vizinhos que estão dentro da borda: ' + vizinhos[i]);
+  }
+
+  for (let i = 0; i < caminho.length; i++) {
+    console.log('Caminho percorrido: ' + caminho[i]);
+  }
+
+  //Elimina vizinhos que já estão em um caminho - ARRUMAR
   for (let i = 0; i < vizinhos.length; i++)
     for (let j = 0; j < caminho.length; j++)
       if (vizinhos[i] === caminho[j]) {
