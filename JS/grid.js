@@ -25,6 +25,7 @@ function createGrid() {
   // Limpa o grid existente
   gridContainer.innerHTML = '';
   cellGrid = [];
+  caminho = [];
 
   //Cria todas as células do grid
   for (let i = 0; i < arrSize[0]; i++) {
@@ -53,20 +54,22 @@ function generatePath() {
   selectOrigin(linOrigin, colOrigin, arrSize[1]);
   selectDestin(linDestin, colDestin, arrSize[1]);
 
-  // console.log(cellGrid[cellGrid.length - 1]);
-
-
   caminho[0] = [linOrigin, colOrigin];
   let vizinhos = [];
   let i = 0;
+  let limite = 10;
   do {
     vizinhos = verificarVizinhosDisponiveis(caminho[i][0], caminho[i][1]);
     i++;
     caminho[i] = vizinhos[Math.floor(Math.random() * vizinhos.length)];
     console.log('Caminho escolhido: ' + caminho[i]);
-    // console.log(vizinhos.length);
+    if (caminho[i][0] == destino[0] && caminho[i][1] == destino[1]) {
+      alert('Chegou no destino');
+      i = limite;
+    } else if (i === limite)
+      alert('Não conseguiu chegar no destino');
     // } while (caminho[i] != destino[0] && vizinhos.length > 0)
-  } while (i < 2)
+  } while (i < limite)
   printPath(caminho);
 
 }
