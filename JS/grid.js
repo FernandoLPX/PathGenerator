@@ -105,14 +105,20 @@ function verificarVizinhosDisponiveis(i, j) {
   }
 
   //Elimina vizinhos que já estão em um caminho - ARRUMAR
-  for (let i = 0; i < vizinhos.length; i++)
-    for (let j = 0; j < caminho.length; j++)
-      if (vizinhos[i] === caminho[j]) {
+  for (let i = 0; i < vizinhos.length; i++) {
+    for (let j = 0; j < caminho.length; j++) {
+      console.log('comparação do vizinho[' + i + ']: ' + vizinhos[i] + ' - caminho[' + j + ']: ' + caminho[j]);
+      // console.log(typeof (parseInt(vizinhos[i])) + ' - ' + typeof (parseInt(caminho[j])));
+      console.log(vizinhos[i]);
+      console.log(caminho[j]);
+      if (vizinhos[i][0] == caminho[j][0] && vizinhos[i][1] == caminho[j][1]) {
         console.log('vizinho eliminado: ' + vizinhos[i]);
         vizinhos.splice(i, 1);
-        i--;
+        if (vizinhos.length - 1 < i)
+          i--;
       }
-
+    }
+  }
   // for (let i = 0; i < vizinhos.length; i++)
   //   console.log(vizinhos[i][0], vizinhos[i][1]);
 
