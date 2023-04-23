@@ -3,6 +3,8 @@ const gridContainer = document.getElementById('grid');
 const generateBtn = document.getElementById('generate-btn');
 var cellGrid = [];
 var caminho = [];
+var tentativas = 0;
+var tentativas2 = [];
 //Pega o tamanho do grid do combobox
 let arrSize = gridSize.value.split("x");
 
@@ -57,27 +59,37 @@ function generatePath() {
   caminho[0] = [linOrigin, colOrigin];
   let vizinhos = [];
   let i = 0;
-  let limite = 23;
+  let limite = 1000;
+  tentativas2[tentativas] = 1;
+  tentativas++;
   do {
     vizinhos = verificarVizinhosDisponiveis(caminho[i][0], caminho[i][1]);
-    if (vizinhos.length === 0) {
-      alert('Beco sem saída');
+    if (vizinhos.length === 0) {// alert('Beco sem saída');
+      generatePath();
+      tentativas--;
       break;
+    } else {
+      i++;
+      caminho[i] = vizinhos[Math.floor(Math.random() * vizinhos.length)];
+      console.log('========================================================== Caminho escolhido: ' + caminho[i] + ' ==========================================================');
+      // if (caminho[i][0] == destino[0] && caminho[i][1] == destino[1]) {
+      if (caminho[i].equals(destino)) {
+        alert('Chegou no destino');
+        i = limite;
+      } else if (i === limite)
+        alert('Não conseguiu chegar no destino');
     }
-    i++;
-    caminho[i] = vizinhos[Math.floor(Math.random() * vizinhos.length)];
-    console.log('========================================================== Caminho escolhido: ' + caminho[i] + ' ==========================================================');
-    // if (caminho[i][0] == destino[0] && caminho[i][1] == destino[1]) {
-    if (caminho[i].equals(destino)) {
-      alert('Chegou no destino');
-      i = limite;
-    } else if (i === limite)
-      alert('Não conseguiu chegar no destino');
     // } while (caminho[i] != destino[0] && vizinhos.length > 0)
   } while (i < limite)
+  if (tentativas === 1 && tentativas2.length > 0) {
+    console.log('TENTATIVAS: ' + tentativas2.length);
+    tentativas = 0;
+    tentativas2 = [];
+  }
   printPath(caminho);
-
+  // console.log('Tentativas: ' + tentativas);
 }
+
 
 function verificarVizinhosDisponiveis(i, j) {
 
@@ -134,6 +146,9 @@ function verificarVizinhosDisponiveis(i, j) {
   }
 
   //Se não existem vizinhos disponíveis marca último caminho como inválido e faz novamente com outra opção
+  if (vizinhos.length === 0) {
+
+  }
 
   return vizinhos;
 }
