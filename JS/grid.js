@@ -57,13 +57,18 @@ function generatePath() {
   caminho[0] = [linOrigin, colOrigin];
   let vizinhos = [];
   let i = 0;
-  let limite = 10;
+  let limite = 23;
   do {
     vizinhos = verificarVizinhosDisponiveis(caminho[i][0], caminho[i][1]);
+    if (vizinhos.length === 0) {
+      alert('Beco sem saída');
+      break;
+    }
     i++;
     caminho[i] = vizinhos[Math.floor(Math.random() * vizinhos.length)];
-    console.log('Caminho escolhido: ' + caminho[i]);
-    if (caminho[i][0] == destino[0] && caminho[i][1] == destino[1]) {
+    console.log('========================================================== Caminho escolhido: ' + caminho[i] + ' ==========================================================');
+    // if (caminho[i][0] == destino[0] && caminho[i][1] == destino[1]) {
+    if (caminho[i].equals(destino)) {
       alert('Chegou no destino');
       i = limite;
     } else if (i === limite)
@@ -75,6 +80,11 @@ function generatePath() {
 }
 
 function verificarVizinhosDisponiveis(i, j) {
+
+  //Mostra o caminho percorrido até o momento no log
+  for (let i = 0; i < caminho.length; i++) {
+    console.log('Caminho percorrido: ' + caminho[i]);
+  }
 
   let vizinhos = [];
   vizinhos[0] = [i - 1, j];//Norte
@@ -103,27 +113,27 @@ function verificarVizinhosDisponiveis(i, j) {
     console.log('Vizinhos que estão dentro da borda: ' + vizinhos[i]);
   }
 
-  for (let i = 0; i < caminho.length; i++) {
-    console.log('Caminho percorrido: ' + caminho[i]);
-  }
 
-  //Elimina vizinhos que já estão em um caminho - ARRUMAR
-  for (let i = 0; i < vizinhos.length; i++) {
-    for (let j = 0; j < caminho.length; j++) {
-      console.log('comparação do vizinho[' + i + ']: ' + vizinhos[i] + ' - caminho[' + j + ']: ' + caminho[j]);
-      // console.log(typeof (parseInt(vizinhos[i])) + ' - ' + typeof (parseInt(caminho[j])));
-      console.log(vizinhos[i]);
-      console.log(caminho[j]);
-      if (vizinhos[i][0] == caminho[j][0] && vizinhos[i][1] == caminho[j][1]) {
-        console.log('vizinho eliminado: ' + vizinhos[i]);
-        vizinhos.splice(i, 1);
-        if (vizinhos.length - 1 < i)
-          i--;
+  //Elimina vizinhos que já estão em um caminho
+  for (let i = 0; i < caminho.length; i++) {
+    for (let j = 0; j < vizinhos.length; j++) {
+      if (vizinhos[j][0] == caminho[i][0] && vizinhos[j][1] == caminho[i][1]) {
+        console.log('Vizinho eliminado que já é um caminho: ' + vizinhos[j]);
+        vizinhos.splice(j, 1);
+        if (typeof (vizinhos[j]) === 'undefined') {
+          // console.log('break');
+          break;
+        }
       }
     }
   }
-  // for (let i = 0; i < vizinhos.length; i++)
-  //   console.log(vizinhos[i][0], vizinhos[i][1]);
+
+  //Só imprimir vizinhos no console para depuração e verificação
+  for (let i = 0; i < vizinhos.length; i++) {
+    console.log('Vizinhos possíveis: ' + vizinhos[i]);
+  }
+
+  //Se não existem vizinhos disponíveis marca último caminho como inválido e faz novamente com outra opção
 
   return vizinhos;
 }
@@ -156,3 +166,16 @@ function printPath(path) {
 createGrid();
 
 generateBtn.addEventListener('click', generatePath);
+
+//Verificar se 2 arrays são iguais
+Array.prototype.equals = function (getArray) {
+  if (this.length != getArray.length) return false;
+  for (var i = 0; i < getArray.length; i++) {
+    if (this[i] instanceof Array && getArray[i] instanceof Array) {
+      if (!this[i].equals(getArray[i])) return false;
+    } else if (this[i] != getArray[i]) {
+      return false;
+    }
+  }
+  return true;
+};
